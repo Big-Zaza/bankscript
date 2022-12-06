@@ -10,10 +10,11 @@ pipeline{
         }
 
         stage('2. Testing parallel jobs'){
-            agent{
+            
+            parallel{
+                agent{
                 label 'slave2'
             }
-            parallel{
             stage('1. Sub-job1'){
                 steps{
                     sh 'df -h'
