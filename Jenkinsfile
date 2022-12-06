@@ -27,10 +27,11 @@ pipeline{
             }
             }
     
-          agent{
+          
+        stage('4. Check cpu statistics'){
+            agent{
             label 'master'
           }
-        stage('4. Check cpu statistics'){
             steps{
                 sh 'lscpu'
             }
