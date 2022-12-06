@@ -32,7 +32,7 @@ pipeline{
           
         stage('4. Check cpu statistics'){
             agent{
-            label 'master'
+            label 'slave1'
           }
             steps{
                 sh 'lscpu'
