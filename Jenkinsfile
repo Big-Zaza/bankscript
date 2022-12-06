@@ -1,20 +1,41 @@
 pipeline{
-    agent any
+    agent {
+        label 'slave1'
+    }
     stages{
         stage('1. Check Ram memory in megabytes'){
             steps{
                 sh 'free -m'
             }
         }
-        stage('2. Check disk free space'){
-            steps{
-                sh 'df -h'
+
+        stage('2. Testing parallel jobs'){
+            agent{
+                label 'slave2'
             }
-        }
-        stage('3. Check cpu statistics'){
+            parallel{
+            stage('1. Sub-job1'){
+                steps{
+                    sh 'df -h'
+                }
+            }
+            stage('2. Sub-job2'){
+                steps{
+                    sh 'whoami'
+                }
+            }
+            }
+            }
+    
+          agent{
+            label 'master'
+          }
+        stage('4. Check cpu statistics'){
             steps{
                 sh 'lscpu'
             }
+            
         }
-    }
+        
+        }
 }
